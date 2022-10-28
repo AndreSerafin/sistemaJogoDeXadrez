@@ -61,9 +61,9 @@ public class UI {
         System.out.printf("Turno: %d\n", chessMatch.getTurn());
         if(!chessMatch.getCheckMate()) {
             if (chessMatch.getCurrentPlayer() == Color.WHITE) {
-                System.out.println("Aguardando jogador: Vermelho");
+                System.out.println("Aguardando jogador:" + ANSI_RED + " Vermelho" + ANSI_RESET);
             } else {
-                System.out.println("Aguardando jogador: Verde");
+                System.out.println("Aguardando jogador:" + ANSI_GREEN + " Verde" + ANSI_RESET);
             }
             if (chessMatch.getCheck()) {
                 System.out.println("CHEQUE!");
@@ -71,9 +71,9 @@ public class UI {
         }else {
             System.out.println("CHEQUE-MATE");
             if (chessMatch.getCurrentPlayer() == Color.WHITE) {
-                System.out.println("Vencedor: Vermelho");
+                System.out.println("Vencedor" + ANSI_RED + "Vermelho" + ANSI_RESET);
             } else {
-                System.out.println("Vencedor: Verde");
+                System.out.println("Vencedor:" + ANSI_GREEN + "Verde" + ANSI_RESET);
             }
         }
     }
