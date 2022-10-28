@@ -1,5 +1,6 @@
 package application;
 
+import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
 import chess.Color;
@@ -52,6 +53,16 @@ public class UI {
         return sb.toString();
     }
 
+    public static void printMatch(ChessMatch chessMatch) {
+        printBoard(chessMatch.getPieces());
+        System.out.println();
+        System.out.printf("Turno: %d\n", chessMatch.getTurn());
+        if(chessMatch.getCurrentPlayer() == Color.WHITE){
+            System.out.println("Aguardando jogador: Vermelho");
+        }else {
+            System.out.println("Aguardando jogador: Verde");
+        }
+    }
     public static void printBoard(ChessPiece[][] pieces) {
         System.out.println(" ┌" + repeatCharacter('─',24) + "┐");
         int index = 0;
@@ -116,9 +127,9 @@ public class UI {
         if(index % 2 == 0) {
             System.out.print(ANSI_WHITE_BACKGROUND);
             if(background) {
-                System.out.print(ANSI_RESET + ANSI_PURPLE_BACKGROUND);
+                System.out.print(ANSI_RESET + ANSI_CYAN_BACKGROUND);
                 if(piece == null) {
-                    System.out.print("   " + ANSI_RESET);
+                    System.out.print(ANSI_WHITE + " ■ " + ANSI_RESET);
                 }else if(piece.getColor() == Color.WHITE) {
                     System.out.print(" " + ANSI_RED + piece + " " +ANSI_RESET);
                 }else if(piece.getColor() == Color.BLACK) {
@@ -136,9 +147,9 @@ public class UI {
         }else {
             System.out.print(ANSI_BLACK_BACKGROUND);
             if(background) {
-                System.out.print(ANSI_RESET + ANSI_PURPLE_BACKGROUND);
+                System.out.print(ANSI_RESET + ANSI_CYAN_BACKGROUND);
                 if(piece == null) {
-                    System.out.print("   " + ANSI_RESET);
+                    System.out.print(ANSI_BLACK + " ■ " + ANSI_RESET);
                 }else if(piece.getColor() == Color.WHITE) {
                     System.out.print(" " + ANSI_RED + piece + " " +ANSI_RESET);
                 }else if(piece.getColor() == Color.BLACK) {
