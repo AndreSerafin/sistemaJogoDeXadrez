@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sistemaJogoDeXadrez:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/sistemaJogoDeXadrez_jar</output-path>
+    <root id="archive" name="sistemaJogoDeXadrez.jar">
+      <element id="module-output" name="sistemaJogoDeXadrez" />
+    </root>
+  </artifact>
+</component>
