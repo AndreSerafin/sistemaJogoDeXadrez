@@ -20,6 +20,7 @@ public class ChessMatch {
     private ChessPiece enPassantVulnerable;
     private List<Piece> piecesOnTheBoard = new ArrayList<>();
     private List<Piece> capturedPieces = new ArrayList<>();
+    private ChessPiece promoted;
 
     public ChessMatch() {
         turn = 1;
@@ -42,6 +43,10 @@ public class ChessMatch {
 
     public Color getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public ChessPiece getPromoted() {
+        return promoted;
     }
 
     public ChessPiece getEnPassantVulnerable() {
@@ -77,6 +82,15 @@ public class ChessMatch {
         }
 
         ChessPiece movedPiece = (ChessPiece) board.piece(target);
+
+        //special move promotion
+        promoted = null;
+        if(movedPiece instanceof Pawn) {
+            if((movedPiece.getColor() == Color.WHITE && target.getRow() == 0 || movedPiece.getColor() == Color.BLACK && target.getRow() == 7)) {
+                promoted = (ChessPiece) board.piece(target);
+                promoted = replacePromotedPiece("r");
+            }
+        }
 
         check = (testCheck(opponent(currentPlayer))) ? true : false;
 
@@ -160,6 +174,31 @@ public class ChessMatch {
         return capturedPiece;
     }
 
+    public ChessPiece replacePromotedPiece(String type) {
+        if(promoted == null) {
+            throw  new IllegalStateException("Não há peça para ser promovida!");
+        }
+        if(!type.equals("B") && !type.equals("C") && !type.equals("T") && !type.equals("r")) {
+            return promoted;
+        }
+
+        Position pos = promoted.getChessPosition().toPosition();
+        Piece p = board.removePiece(pos);
+        piecesOnTheBoard.remove(p);
+
+        ChessPiece newPiece = newPiece(type, promoted.getColor());
+        board.placePiece(newPiece, pos);
+        piecesOnTheBoard.add(newPiece);
+
+        return newPiece;
+    }
+
+    private ChessPiece newPiece(String type, Color color) {
+        if(type.equals("B")) return new Bishop(board, color);
+        if(type.equals("C")) return new Knight(board, color);
+        if(type.equals("r")) return new Queen(board, color);
+        return new Rook(board, color);
+    }
     private void undoMove(Position source,Position target, Piece capturedPiece ) {
         ChessPiece p = (ChessPiece) board.removePiece(target);
         p.decreaseMoveCount();
